@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="BuildCore.Api/BuildCore.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/">
+    <Project Path="BuildCore.SharedKernel/BuildCore.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/HumanResoruces/">
+    <Project Path="BuildCore.HumanResources.Application/BuildCore.HumanResources.Application.csproj" />
+    <Project Path="BuildCore.HumanResources.Domain/BuildCore.HumanResources.Domain.csproj" />
+    <Project Path="BuildCore.HumanResources.Infrastructure/BuildCore.HumanResources.Infrastructure.csproj" />
+  </Folder>
+</Solution>
