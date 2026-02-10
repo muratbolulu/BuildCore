@@ -2,6 +2,8 @@ using BuildCore.HumanResources.Application.Interfaces;
 using BuildCore.HumanResources.Application.UseCases;
 using BuildCore.HumanResources.Domain.Interfaces;
 using BuildCore.HumanResources.Infrastructure.Persistence;
+using BuildCore.HumanResources.Infrastructure.Persistence.Extensions;
+using BuildCore.HumanResources.Infrastructure.Persistence.Repositories;
 using BuildCore.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +35,9 @@ builder.Services.AddDbContext<HumanResourcesDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddPersistence(builder.Configuration); //ya da Infrastructure’ı ekleyebilirsin, önemli olan Persistence katmanındaki extension methodu çağırmak
+
 
 var app = builder.Build();
 

@@ -18,7 +18,14 @@ public class User : BaseEntity
     // Private constructor for EF Core
     private User() { }
 
-    public User(string firstName, string lastName, string email, string? phoneNumber = null, string? department = null, string? position = null, DateTime? hireDate = null)
+    public User(
+        string firstName,
+        string lastName,
+        string email,
+        string? phoneNumber = null,
+        string? department = null,
+        string? position = null,
+        DateTime? hireDate = null)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -29,18 +36,38 @@ public class User : BaseEntity
         HireDate = hireDate;
     }
 
-    public void Update(string firstName, string lastName, string email, string? phoneNumber = null, string? department = null, string? position = null, DateTime? hireDate = null)
+    public void Update(
+        string firstName,
+        string lastName,
+        string email,
+        string? phoneNumber = null,
+        string? department = null,
+        string? position = null,
+        DateTime? hireDate = null)
     {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
+        SetIdentity(firstName, lastName, email);
         PhoneNumber = phoneNumber;
         Department = department;
         Position = position;
         HireDate = hireDate;
-        UpdateTimestamp();
     }
 
     public string GetFullName() => $"{FirstName} {LastName}";
+
+    private void SetIdentity(string firstName, string lastName, string email)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            throw new ArgumentException("FirstName boş olamaz");
+
+        if (string.IsNullOrWhiteSpace(lastName))
+            throw new ArgumentException("LastName boş olamaz");
+
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException("Email boş olamaz");
+
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+    }
 }
 

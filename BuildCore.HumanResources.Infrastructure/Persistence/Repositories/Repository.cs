@@ -3,7 +3,7 @@ using BuildCore.SharedKernel.Entities;
 using BuildCore.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildCore.HumanResources.Infrastructure.Persistence;
+namespace BuildCore.HumanResources.Infrastructure.Persistence.Repositories;
 
 /// <summary>
 /// Generic repository implementasyonu

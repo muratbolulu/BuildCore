@@ -2,7 +2,7 @@ using BuildCore.HumanResources.Domain.Entities;
 using BuildCore.HumanResources.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildCore.HumanResources.Infrastructure.Persistence;
+namespace BuildCore.HumanResources.Infrastructure.Persistence.Repositories;
 
 /// <summary>
 /// Kullanıcı repository implementasyonu

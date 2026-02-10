@@ -6,19 +6,30 @@ namespace BuildCore.SharedKernel.Entities;
 public abstract class BaseEntity
 {
     public Guid Id { get; protected set; } = Guid.NewGuid();
-    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; protected set; }
-    public bool IsDeleted { get; protected set; } = false;
+
+    public DateTimeOffset CreatedAt { get; protected set; }
+    public DateTimeOffset? UpdatedAt { get; protected set; }
+
+    public string CreatedBy { get; protected set; } = default!;
+    public string? UpdatedBy { get; protected set; }
+
+    public bool IsDeleted { get; protected set; }
+
+    internal void SetCreated(string userId, DateTimeOffset now)
+    {
+        CreatedBy = userId;
+        CreatedAt = now;
+    }
+
+    internal void SetUpdated(string userId, DateTimeOffset now)
+    {
+        UpdatedBy = userId;
+        UpdatedAt = now;
+    }
 
     public void MarkAsDeleted()
     {
         IsDeleted = true;
-        UpdatedAt = DateTime.UtcNow;
-    }
-
-    public void UpdateTimestamp()
-    {
-        UpdatedAt = DateTime.UtcNow;
     }
 }
 

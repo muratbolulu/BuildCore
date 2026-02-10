@@ -4,6 +4,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+	  <AssemblyName>BuildCore.SharedKernel</AssemblyName>
   </PropertyGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>BuildCore.HumanResources.Infrastructure</_Parameter1> <!--burada bağımlılık vermedik, assembly erişim izni verdik.-->
+		</AssemblyAttribute>
+	</ItemGroup>
+
 </Project>
+

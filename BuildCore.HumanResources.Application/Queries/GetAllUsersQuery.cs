@@ -7,3 +7,6 @@ public class GetAllUsersQuery
 {
 }
 
+//domain events ? 
+
+//    integration events ?

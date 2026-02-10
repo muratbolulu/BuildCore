@@ -14,7 +14,7 @@ public class UserDto
     public string? Department { get; set; }
     public string? Position { get; set; }
     public DateTime? HireDate { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 }
 
