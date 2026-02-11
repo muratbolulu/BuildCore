@@ -1,0 +1,42 @@
+@model BuildCore.ApprovalManagement.Application.DTOs.CreateApprovalRequestDto
+
+@{
+    ViewData["Title"] = "Yeni Onay Talebi";
+}
+
+<div class="container mt-4">
+    <h2>Yeni Onay Talebi</h2>
+    <hr />
+
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="ApprovalRuleId" class="form-label"></label>
+            <input asp-for="ApprovalRuleId" class="form-control" />
+            <span asp-validation-for="ApprovalRuleId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RequestType" class="form-label"></label>
+            <input asp-for="RequestType" class="form-control" />
+            <span asp-validation-for="RequestType" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RequesterUserId" class="form-label"></label>
+            <input asp-for="RequesterUserId" class="form-control" />
+            <span asp-validation-for="RequesterUserId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

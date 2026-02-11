@@ -1,0 +1,63 @@
+@model BuildCore.ApprovalManagement.Application.DTOs.ApprovalRequestDto
+
+@{
+    ViewData["Title"] = "Onay Talebi Detayı";
+}
+
+<div class="container mt-4">
+    <h2>Onay Talebi Detayı</h2>
+    <hr />
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <dl class="row">
+        <dt class="col-sm-3">Onay Kuralı:</dt>
+        <dd class="col-sm-9">@Model.ApprovalRuleName</dd>
+
+        <dt class="col-sm-3">Talep Tipi:</dt>
+        <dd class="col-sm-9">@Model.RequestType</dd>
+
+        <dt class="col-sm-3">Durum:</dt>
+        <dd class="col-sm-9">
+            <span class="badge bg-@(Model.Status == "Approved" ? "success" : Model.Status == "Rejected" ? "danger" : "warning")">
+                @Model.Status
+            </span>
+        </dd>
+
+        <dt class="col-sm-3">Talep Tarihi:</dt>
+        <dd class="col-sm-9">@Model.RequestedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+    </dl>
+
+    @if (Model.Decisions.Any())
+    {
+        <h4 class="mt-4">Kararlar</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tarih</th>
+                    <th>Onaylayıcı</th>
+                    <th>Durum</th>
+                    <th>Notlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var decision in Model.Decisions)
+                {
+                    <tr>
+                        <td>@decision.DecisionDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>@decision.ApproverUserId</td>
+                        <td>@decision.Status</td>
+                        <td>@(decision.Notes ?? "-")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </div>
+</div>

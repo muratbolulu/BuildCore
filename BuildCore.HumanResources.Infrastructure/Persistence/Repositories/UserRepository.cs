@@ -15,12 +15,16 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        // HasQueryFilter otomatik olarak uygulanır, ama explicit filter ekliyoruz
+        return await _dbSet
+            .Where(u => !u.IsDeleted && u.Email == email)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<bool> EmailExistsAsync(string email, Guid? excludeUserId = null, CancellationToken cancellationToken = default)
     {
-        var query = _dbSet.Where(u => u.Email == email);
+        // HasQueryFilter otomatik olarak uygulanır, ama explicit filter ekliyoruz
+        var query = _dbSet.Where(u => !u.IsDeleted && u.Email == email);
         
         if (excludeUserId.HasValue)
         {
@@ -32,17 +36,22 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public override async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
+        // HasQueryFilter otomatik olarak Include'larla birlikte çalışır
         return await _dbSet
+            .Where(u => !u.IsDeleted && u.Id == id)
             .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
-            .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
     public override async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default)
     {
+        // HasQueryFilter otomatik olarak Include'larla birlikte çalışır
+        // IsDeleted = false olan kullanıcıları getirir
         return await _dbSet
             .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
+            .Where(u => !u.IsDeleted) // Explicit filter (HasQueryFilter zaten var ama ekstra güvenlik için)
             .ToListAsync(cancellationToken);
     }
 }

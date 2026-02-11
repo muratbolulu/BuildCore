@@ -1,6 +1,7 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using BuildCore.WebApp.Filters;
 using BuildCore.WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BuildCore.WebApp.Controllers;
 
@@ -13,11 +14,13 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    // Login olmadan erişilebilir
     public IActionResult Index()
     {
         return View();
     }
 
+    [RequireLogin]
     public IActionResult Privacy()
     {
         return View();

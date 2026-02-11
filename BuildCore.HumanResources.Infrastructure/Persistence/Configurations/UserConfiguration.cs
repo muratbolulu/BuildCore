@@ -1,4 +1,4 @@
-﻿using BuildCore.HumanResources.Domain.Entities;
+using BuildCore.HumanResources.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -22,6 +22,9 @@ namespace BuildCore.HumanResources.Infrastructure.Persistence.Configurations
             builder.Property(x => x.LastName)
                    .HasMaxLength(50)
                    .IsRequired();
+
+            // Soft delete için query filter
+            builder.HasQueryFilter(u => !u.IsDeleted);
         }
     }
 }

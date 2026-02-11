@@ -1,5 +1,6 @@
 using BuildCore.HumanResources.Application.DTOs;
 using BuildCore.HumanResources.Application.Interfaces;
+using BuildCore.WebApp.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuildCore.WebApp.Controllers;
@@ -7,6 +8,7 @@ namespace BuildCore.WebApp.Controllers;
 /// <summary>
 /// Kullanıcı CRUD işlemleri için MVC Controller
 /// </summary>
+[RequireLogin]
 public class UsersController : Controller
 {
     private readonly IUserService _userService;

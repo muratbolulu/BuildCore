@@ -1,0 +1,58 @@
+@model BuildCore.WorkflowEngine.Application.DTOs.WorkflowInstanceDto
+
+@{
+    ViewData["Title"] = "İş Akışı Detayı";
+}
+
+<div class="container mt-4">
+    <h2>İş Akışı Detayı</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">İş Akışı:</dt>
+        <dd class="col-sm-9">@Model.WorkflowDefinitionName</dd>
+
+        <dt class="col-sm-3">Durum:</dt>
+        <dd class="col-sm-9">
+            <span class="badge bg-@(Model.Status == "Completed" ? "success" : Model.Status == "Cancelled" ? "danger" : "warning")">
+                @Model.Status
+            </span>
+        </dd>
+
+        <dt class="col-sm-3">Başlangıç Tarihi:</dt>
+        <dd class="col-sm-9">@(Model.StartedAt?.ToString("dd.MM.yyyy HH:mm") ?? "-")</dd>
+
+        <dt class="col-sm-3">Mevcut Adım:</dt>
+        <dd class="col-sm-9">@(Model.CurrentStepName ?? "-")</dd>
+    </dl>
+
+    @if (Model.History != null && Model.History.Any())
+    {
+        <h4 class="mt-4">Geçmiş</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tarih</th>
+                    <th>Aksiyon</th>
+                    <th>Kullanıcı</th>
+                    <th>Notlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var history in Model.History.OrderBy(h => h.ActionDate))
+                {
+                    <tr>
+                        <td>@history.ActionDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>@history.Action</td>
+                        <td>@(history.UserId ?? "-")</td>
+                        <td>@(history.Notes ?? "-")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </div>
+</div>
