@@ -25,6 +25,12 @@
   <ItemGroup>
     <ProjectReference Include="..\BuildCore.HumanResources.Application\BuildCore.HumanResources.Application.csproj" />
     <ProjectReference Include="..\BuildCore.HumanResources.Infrastructure\BuildCore.HumanResources.Infrastructure.csproj" />
+    <ProjectReference Include="..\BuildCore.WorkflowEngine.Application\BuildCore.WorkflowEngine.Application.csproj" />
+    <ProjectReference Include="..\BuildCore.WorkflowEngine.Infrastructure\BuildCore.WorkflowEngine.Infrastructure.csproj" />
+    <ProjectReference Include="..\BuildCore.ApprovalManagement.Application\BuildCore.ApprovalManagement.Application.csproj" />
+    <ProjectReference Include="..\BuildCore.ApprovalManagement.Infrastructure\BuildCore.ApprovalManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\BuildCore.Notification.Application\BuildCore.Notification.Application.csproj" />
+    <ProjectReference Include="..\BuildCore.Notification.Infrastructure\BuildCore.Notification.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

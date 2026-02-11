@@ -14,4 +14,19 @@
     <Project Path="BuildCore.HumanResources.Domain/BuildCore.HumanResources.Domain.csproj" />
     <Project Path="BuildCore.HumanResources.Infrastructure/BuildCore.HumanResources.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/src/Modules/WorkflowEngine/">
+    <Project Path="BuildCore.WorkflowEngine.Application/BuildCore.WorkflowEngine.Application.csproj" />
+    <Project Path="BuildCore.WorkflowEngine.Domain/BuildCore.WorkflowEngine.Domain.csproj" />
+    <Project Path="BuildCore.WorkflowEngine.Infrastructure/BuildCore.WorkflowEngine.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/ApprovalManagement/">
+    <Project Path="BuildCore.ApprovalManagement.Application/BuildCore.ApprovalManagement.Application.csproj" />
+    <Project Path="BuildCore.ApprovalManagement.Domain/BuildCore.ApprovalManagement.Domain.csproj" />
+    <Project Path="BuildCore.ApprovalManagement.Infrastructure/BuildCore.ApprovalManagement.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Notification/">
+    <Project Path="BuildCore.Notification.Application/BuildCore.Notification.Application.csproj" />
+    <Project Path="BuildCore.Notification.Domain/BuildCore.Notification.Domain.csproj" />
+    <Project Path="BuildCore.Notification.Infrastructure/BuildCore.Notification.Infrastructure.csproj" />
+  </Folder>
 </Solution>

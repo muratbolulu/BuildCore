@@ -5,6 +5,12 @@ using BuildCore.HumanResources.Infrastructure.Authentication;
 using BuildCore.HumanResources.Infrastructure.Persistence;
 using BuildCore.HumanResources.Infrastructure.Persistence.Extensions;
 using BuildCore.HumanResources.Infrastructure.Persistence.Seed;
+using BuildCore.WorkflowEngine.Infrastructure.Persistence;
+using BuildCore.WorkflowEngine.Infrastructure.Persistence.Extensions;
+using BuildCore.ApprovalManagement.Infrastructure.Persistence;
+using BuildCore.ApprovalManagement.Infrastructure.Persistence.Extensions;
+using BuildCore.Notification.Infrastructure.Persistence;
+using BuildCore.Notification.Infrastructure.Persistence.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +59,15 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddPersistence(builder.Configuration);
+
+// WorkflowEngine persistence servislerini ekle
+builder.Services.AddWorkflowEnginePersistence(builder.Configuration);
+
+// ApprovalManagement persistence servislerini ekle
+builder.Services.AddApprovalManagementPersistence(builder.Configuration);
+
+// Notification persistence servislerini ekle
+builder.Services.AddNotificationPersistence(builder.Configuration);
 
 // Authentication servislerini ekle
 builder.Services.AddAuthenticationServices(builder.Configuration);
@@ -106,14 +121,33 @@ using (var scope = app.Services.CreateScope())
     var logger = services.GetRequiredService<ILogger<Program>>();
     try
     {
-        var context = services.GetRequiredService<HumanResourcesDbContext>();
-        logger.LogInformation("Veritabanı migration başlatılıyor...");
-        await context.Database.MigrateAsync();
-        logger.LogInformation("Veritabanı migration tamamlandı.");
+        // HumanResources DbContext migration
+        var hrContext = services.GetRequiredService<HumanResourcesDbContext>();
+        logger.LogInformation("HumanResources veritabanı migration başlatılıyor...");
+        await hrContext.Database.MigrateAsync();
+        logger.LogInformation("HumanResources veritabanı migration tamamlandı.");
         
-        logger.LogInformation("Seed işlemi başlatılıyor...");
-        await DatabaseSeeder.SeedAsync(context, services);
-        logger.LogInformation("Seed işlemi tamamlandı.");
+        logger.LogInformation("HumanResources seed işlemi başlatılıyor...");
+        await DatabaseSeeder.SeedAsync(hrContext, services);
+        logger.LogInformation("HumanResources seed işlemi tamamlandı.");
+
+        // WorkflowEngine DbContext migration
+        var workflowContext = services.GetRequiredService<WorkflowEngineDbContext>();
+        logger.LogInformation("WorkflowEngine veritabanı migration başlatılıyor...");
+        await workflowContext.Database.MigrateAsync();
+        logger.LogInformation("WorkflowEngine veritabanı migration tamamlandı.");
+
+        // ApprovalManagement DbContext migration
+        var approvalContext = services.GetRequiredService<ApprovalManagementDbContext>();
+        logger.LogInformation("ApprovalManagement veritabanı migration başlatılıyor...");
+        await approvalContext.Database.MigrateAsync();
+        logger.LogInformation("ApprovalManagement veritabanı migration tamamlandı.");
+
+        // Notification DbContext migration
+        var notificationContext = services.GetRequiredService<NotificationDbContext>();
+        logger.LogInformation("Notification veritabanı migration başlatılıyor...");
+        await notificationContext.Database.MigrateAsync();
+        logger.LogInformation("Notification veritabanı migration tamamlandı.");
     }
     catch (Exception ex)
     {
