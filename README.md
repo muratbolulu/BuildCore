@@ -39,10 +39,10 @@ BuildCore, modüler yapıda tasarlanmış bir kurumsal uygulama çerçevesidir. 
 ```
 ┌─────────────────────────────────────────┐
 │         Presentation Layer              │
-│  ┌──────────────┐  ┌──────────────┐   │
-│  │  BuildCore   │  │  BuildCore   │   │
-│  │     .Api     │  │   .WebApp    │   │
-│  └──────────────┘  └──────────────┘   │
+│  ┌──────────────┐  ┌──────────────┐     │
+│  │  BuildCore   │  │  BuildCore   │     │
+│  │     .Api     │  │   .WebApp    │     │
+│  └──────────────┘  └──────────────┘     │
 └─────────────────────────────────────────┘
                   ↓
 ┌─────────────────────────────────────────┐
@@ -63,7 +63,7 @@ BuildCore, modüler yapıda tasarlanmış bir kurumsal uygulama çerçevesidir. 
 │  - Aggregates                           │
 │  - Domain Interfaces                    │
 └─────────────────────────────────────────┘
-                  ↓
+                  
 ┌─────────────────────────────────────────┐
 │      Infrastructure Layer               │
 │  BuildCore.HumanResources.Infrastructure│
@@ -72,48 +72,50 @@ BuildCore, modüler yapıda tasarlanmış bir kurumsal uygulama çerçevesidir. 
 │  - External Services                    │
 │  - Event Publishing                     │
 └─────────────────────────────────────────┘
-                  ↓
+                  
 ┌─────────────────────────────────────────┐
 │       Shared Kernel                     │
 │  BuildCore.SharedKernel                 │
-│  - Base Entities                       │
+│  - Base Entities                        │
 │  - Common Interfaces                    │
-│  - Domain Events Base                  │
+│  - Domain Events Base                   │
 └─────────────────────────────────────────┘
 ```
 
 ### Bağımlılık Yönü
 
 ```
-Presentation → Application → Domain ← Infrastructure
-                                      ↓
+Presentation → Application → Domain
+                                      
+             Infrastructure → Application
+
                                  SharedKernel
 ```
 
-**Altın Kural:** Bağımlılıklar her zaman içe doğru (Domain'e doğru) akar. Domain katmanı hiçbir katmana bağımlı değildir.
+**Altın Kural:** Bağımlılıklar her zaman içe doğru (Domain'e doğru) akar. Domain katmanı hiçbir katmana bağımlı değildir.Isterse SharedKernel kullanabilir.
 
 ## 📁 Proje Yapısı
 
 ```
 BuildCore/
-├── BuildCore.Api/                          # REST API (Web API)
-│   ├── Controllers/                        # API Controllers
-│   ├── Authorization/                      # Custom Authorization Handlers
+├── BuildCore.Api/                         # REST API (Web API)
+│   ├── Controllers/                       # API Controllers
+│   ├── Authorization/                     # Custom Authorization Handlers
 │   └── Program.cs                         # API Startup
 │
-├── BuildCore.WebApp/                       # MVC Web Application
-│   ├── Controllers/                        # MVC Controllers
+├── BuildCore.WebApp/                      # MVC Web Application
+│   ├── Controllers/                       # MVC Controllers
 │   ├── Views/                             # Razor Views
 │   └── Program.cs                         # WebApp Startup
 │
-├── BuildCore.HumanResources.Application/   # Application Layer
+├── BuildCore.HumanResources.Application/  # Application Layer
 │   ├── Commands/                          # CQRS Commands
 │   ├── Queries/                           # CQRS Queries
 │   ├── DTOs/                              # Data Transfer Objects
 │   ├── Interfaces/                        # Application Interfaces
 │   └── UseCases/                          # Application Services
 │
-├── BuildCore.HumanResources.Domain/        # Domain Layer
+├── BuildCore.HumanResources.Domain/       # Domain Layer
 │   ├── Entities/                          # Domain Entities
 │   ├── DomainEvents/                      # Domain Events (planlanıyor)
 │   ├── Aggregates/                        # Aggregates (planlanıyor)
@@ -125,17 +127,17 @@ BuildCore/
 │   │   ├── Configurations/                # EF Core Configurations
 │   │   ├── Repositories/                  # Repository Implementations
 │   │   ├── Interceptors/                  # EF Core Interceptors
-│   │   │   ├── AuditInterceptor          # Audit Logging
-│   │   │   ├── DomainEventInterceptor    # Domain Event Publishing
-│   │   │   └── SoftDeleteInterceptor     # Soft Delete
+│   │   │   ├── AuditInterceptor           # Audit Logging
+│   │   │   ├── DomainEventInterceptor     # Domain Event Publishing
+│   │   │   └── SoftDeleteInterceptor      # Soft Delete
 │   │   ├── Migrations/                    # Database Migrations
-│   │   └── Seed/                         # Database Seeding
+│   │   └── Seed/                          # Database Seeding
 │   ├── Authentication/                    # JWT Authentication
-│   └── Common/                           # Infrastructure Services
+│   └── Common/                            # Infrastructure Services
 │
 └── BuildCore.SharedKernel/                # Shared Kernel
     ├── Entities/                          # Base Entities
-    └── Interfaces/                      # Common Interfaces
+    └── Interfaces/                        # Common Interfaces
 ```
 
 ## 🛠️ Teknolojiler
@@ -420,7 +422,7 @@ AuditInterceptor (CreatedBy, UpdatedBy)
     ↓
 DomainEventInterceptor (Event Publishing)
     ↓
-SoftDeleteInterceptor (IsDeleted)
+SoftDeleteInterceptor (for IsDeleted vb.)
     ↓
 Database Commit
     ↓
@@ -469,11 +471,9 @@ Bu proje [lisans bilgisi] altında lisanslanmıştır.
 
 ## 👥 Katkıda Bulunanlar
 
-- [İsimler]
+- Murat Bolulu
 
-## 📞 İletişim
-
-Sorularınız için [iletişim bilgileri]
+## 📞 İletişim 0541 574 87 16
 
 ---
 
