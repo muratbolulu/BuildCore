@@ -1,0 +1,33 @@
+@model BuildCore.ApprovalManagement.Application.DTOs.ApprovalRuleDto
+
+@{
+    ViewData["Title"] = "Onay Kuralı Detayı";
+}
+
+<div class="container mt-4">
+    <h2>Onay Kuralı Detayı</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Ad:</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Tip:</dt>
+        <dd class="col-sm-9">@Model.RuleType</dd>
+
+        <dt class="col-sm-3">Durum:</dt>
+        <dd class="col-sm-9">
+            <span class="badge bg-@(Model.IsActive ? "success" : "secondary")">
+                @(Model.IsActive ? "Aktif" : "Pasif")
+            </span>
+        </dd>
+
+        <dt class="col-sm-3">Açıklama:</dt>
+        <dd class="col-sm-9">@(Model.Description ?? "-")</dd>
+    </dl>
+
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@model BuildCore.Notification.Application.DTOs.NotificationTemplateDto
+
+@{
+    ViewData["Title"] = "Bildirim Şablonu Detayı";
+}
+
+<div class="container mt-4">
+    <h2>Bildirim Şablonu Detayı</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Ad:</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Tip:</dt>
+        <dd class="col-sm-9">@Model.TemplateType</dd>
+
+        <dt class="col-sm-3">Durum:</dt>
+        <dd class="col-sm-9">
+            <span class="badge bg-@(Model.IsActive ? "success" : "secondary")">
+                @(Model.IsActive ? "Aktif" : "Pasif")
+            </span>
+        </dd>
+
+        <dt class="col-sm-3">Konu:</dt>
+        <dd class="col-sm-9">@Model.Subject</dd>
+
+        <dt class="col-sm-3">İçerik:</dt>
+        <dd class="col-sm-9">@Model.Body</dd>
+    </dl>
+
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </div>
+</div>

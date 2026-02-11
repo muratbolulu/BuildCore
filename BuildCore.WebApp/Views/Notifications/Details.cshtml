@@ -1,0 +1,41 @@
+@model BuildCore.Notification.Application.DTOs.NotificationDto
+
+@{
+    ViewData["Title"] = "Bildirim Detayı";
+}
+
+<div class="container mt-4">
+    <h2>Bildirim Detayı</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Alıcı:</dt>
+        <dd class="col-sm-9">@Model.RecipientUserId</dd>
+
+        <dt class="col-sm-3">Tip:</dt>
+        <dd class="col-sm-9">@Model.NotificationType</dd>
+
+        <dt class="col-sm-3">Durum:</dt>
+        <dd class="col-sm-9">
+            <span class="badge bg-@(Model.Status == "Delivered" ? "success" : Model.Status == "Failed" ? "danger" : "warning")">
+                @Model.Status
+            </span>
+        </dd>
+
+        <dt class="col-sm-3">Konu:</dt>
+        <dd class="col-sm-9">@Model.Subject</dd>
+
+        <dt class="col-sm-3">İçerik:</dt>
+        <dd class="col-sm-9">@Model.Body</dd>
+
+        <dt class="col-sm-3">Gönderilme Tarihi:</dt>
+        <dd class="col-sm-9">@(Model.SentAt?.ToString("dd.MM.yyyy HH:mm") ?? "-")</dd>
+
+        <dt class="col-sm-3">Teslim Tarihi:</dt>
+        <dd class="col-sm-9">@(Model.DeliveredAt?.ToString("dd.MM.yyyy HH:mm") ?? "-")</dd>
+    </dl>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </div>
+</div>

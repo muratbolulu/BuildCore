@@ -1,0 +1,42 @@
+@model BuildCore.WorkflowEngine.Application.DTOs.StartWorkflowInstanceDto
+
+@{
+    ViewData["Title"] = "İş Akışı Başlat";
+}
+
+<div class="container mt-4">
+    <h2>Yeni İş Akışı Başlat</h2>
+    <hr />
+
+    <form asp-action="Start" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="WorkflowDefinitionId" class="form-label"></label>
+            <input asp-for="WorkflowDefinitionId" class="form-control" />
+            <span asp-validation-for="WorkflowDefinitionId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="InitiatorUserId" class="form-label"></label>
+            <input asp-for="InitiatorUserId" class="form-control" />
+            <span asp-validation-for="InitiatorUserId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ContextData" class="form-label"></label>
+            <textarea asp-for="ContextData" class="form-control" rows="3" placeholder='{"key": "value"}'></textarea>
+            <span asp-validation-for="ContextData" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Başlat</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

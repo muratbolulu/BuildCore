@@ -1,0 +1,53 @@
+@model BuildCore.WorkflowEngine.Application.DTOs.WorkflowDefinitionDto
+
+@{
+    ViewData["Title"] = "İş Akışı Detayı";
+}
+
+<div class="container mt-4">
+    <h2>İş Akışı Detayı</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Ad:</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Açıklama:</dt>
+        <dd class="col-sm-9">@(Model.Description ?? "-")</dd>
+
+        <dt class="col-sm-3">Adım Sayısı:</dt>
+        <dd class="col-sm-9">@Model.Steps.Count</dd>
+
+        <dt class="col-sm-3">Oluşturulma Tarihi:</dt>
+        <dd class="col-sm-9">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+    </dl>
+
+    @if (Model.Steps.Any())
+    {
+        <h4 class="mt-4">Adımlar</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sıra</th>
+                    <th>Ad</th>
+                    <th>Tip</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var step in Model.Steps.OrderBy(s => s.Order))
+                {
+                    <tr>
+                        <td>@step.Order</td>
+                        <td>@step.Name</td>
+                        <td>@step.StepType</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </div>
+</div>

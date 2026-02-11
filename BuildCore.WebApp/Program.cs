@@ -4,6 +4,15 @@ using BuildCore.HumanResources.Infrastructure.Authentication;
 using BuildCore.HumanResources.Infrastructure.Persistence;
 using BuildCore.HumanResources.Infrastructure.Persistence.Extensions;
 using BuildCore.HumanResources.Infrastructure.Persistence.Seed;
+using BuildCore.WorkflowEngine.Application.Interfaces;
+using BuildCore.WorkflowEngine.Infrastructure.Persistence;
+using BuildCore.WorkflowEngine.Infrastructure.Persistence.Extensions;
+using BuildCore.ApprovalManagement.Application.Interfaces;
+using BuildCore.ApprovalManagement.Infrastructure.Persistence;
+using BuildCore.ApprovalManagement.Infrastructure.Persistence.Extensions;
+using BuildCore.Notification.Application.Interfaces;
+using BuildCore.Notification.Infrastructure.Persistence;
+using BuildCore.Notification.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +22,15 @@ builder.Services.AddControllersWithViews();
 
 // Infrastructure ve Application servislerini ekle (DbContext ve interceptor'ları içerir)
 builder.Services.AddPersistence(builder.Configuration);
+
+// WorkflowEngine persistence servislerini ekle
+builder.Services.AddWorkflowEnginePersistence(builder.Configuration);
+
+// ApprovalManagement persistence servislerini ekle
+builder.Services.AddApprovalManagementPersistence(builder.Configuration);
+
+// Notification persistence servislerini ekle
+builder.Services.AddNotificationPersistence(builder.Configuration);
 
 // Authentication servislerini ekle
 builder.Services.AddAuthenticationServices(builder.Configuration);
@@ -47,6 +65,45 @@ using (var scope = app.Services.CreateScope())
         logger.LogInformation("Seed işlemi başlatılıyor...");
         await DatabaseSeeder.SeedAsync(context, services);
         logger.LogInformation("Seed işlemi tamamlandı.");
+
+        // WorkflowEngine DbContext migration
+        try
+        {
+            var workflowContext = services.GetRequiredService<WorkflowEngineDbContext>();
+            logger.LogInformation("WorkflowEngine veritabanı migration başlatılıyor...");
+            await workflowContext.Database.MigrateAsync();
+            logger.LogInformation("WorkflowEngine veritabanı migration tamamlandı.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "WorkflowEngine migration hatası (devam ediliyor)");
+        }
+
+        // ApprovalManagement DbContext migration
+        try
+        {
+            var approvalContext = services.GetRequiredService<ApprovalManagementDbContext>();
+            logger.LogInformation("ApprovalManagement veritabanı migration başlatılıyor...");
+            await approvalContext.Database.MigrateAsync();
+            logger.LogInformation("ApprovalManagement veritabanı migration tamamlandı.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "ApprovalManagement migration hatası (devam ediliyor)");
+        }
+
+        // Notification DbContext migration
+        try
+        {
+            var notificationContext = services.GetRequiredService<NotificationDbContext>();
+            logger.LogInformation("Notification veritabanı migration başlatılıyor...");
+            await notificationContext.Database.MigrateAsync();
+            logger.LogInformation("Notification veritabanı migration tamamlandı.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Notification migration hatası (devam ediliyor)");
+        }
     }
     catch (Exception ex)
     {
