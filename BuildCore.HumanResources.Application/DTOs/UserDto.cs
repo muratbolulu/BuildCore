@@ -13,7 +13,7 @@ public class UserDto
     public string? PhoneNumber { get; set; }
     public string? Department { get; set; }
     public string? Position { get; set; }
-    public DateTime? HireDate { get; set; }
+    public DateOnly? HireDate { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
 }

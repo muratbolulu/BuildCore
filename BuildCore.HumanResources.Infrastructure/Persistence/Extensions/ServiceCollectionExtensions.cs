@@ -1,17 +1,18 @@
-﻿using BuildCore.HumanResources.Infrastructure.Persistence.Interceptors;
+﻿using BuildCore.HumanResources.Application.Common.Interfaces;
+using BuildCore.HumanResources.Domain.Interfaces;
+using BuildCore.HumanResources.Infrastructure.Common;
+using BuildCore.HumanResources.Infrastructure.Persistence.Interceptors;
+using BuildCore.HumanResources.Infrastructure.Persistence.Repositories;
 using BuildCore.SharedKernel.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using BuildCore.HumanResources.Infrastructure.Persistence.Repositories;
-using BuildCore.HumanResources.Domain.Interfaces;
-using BuildCore.HumanResources.Infrastructure.Common;
-using BuildCore.HumanResources.Application.Common.Interfaces;
 
 namespace BuildCore.HumanResources.Infrastructure.Persistence.Extensions
 {
@@ -68,6 +69,15 @@ namespace BuildCore.HumanResources.Infrastructure.Persistence.Extensions
             // ----------------------------------------------------
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // ----------------------------------------------------
+            // 6. MediatR
+            // ----------------------------------------------------
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
+
 
             return services;
         }

@@ -19,6 +19,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         _dbSet = context.Set<T>();
     }
 
+    //"virtual" override edilip içi değiştirebilir hale getirdik. Örn bir entity Include edilerek genişletilebilir.
     public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbSet.FindAsync(new object[] { id }, cancellationToken);

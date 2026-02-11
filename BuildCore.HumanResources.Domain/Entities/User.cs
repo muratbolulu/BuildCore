@@ -13,7 +13,7 @@ public class User : BaseEntity
     public string? PhoneNumber { get; private set; }
     public string? Department { get; private set; }
     public string? Position { get; private set; }
-    public DateTime? HireDate { get; private set; }
+    public DateOnly? HireDate { get; private set; }
 
     // Private constructor for EF Core
     private User() { }
@@ -25,7 +25,7 @@ public class User : BaseEntity
         string? phoneNumber = null,
         string? department = null,
         string? position = null,
-        DateTime? hireDate = null)
+        DateOnly? hireDate = null)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -43,7 +43,7 @@ public class User : BaseEntity
         string? phoneNumber = null,
         string? department = null,
         string? position = null,
-        DateTime? hireDate = null)
+        DateOnly? hireDate = null)
     {
         SetIdentity(firstName, lastName, email);
         PhoneNumber = phoneNumber;
