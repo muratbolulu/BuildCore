@@ -1,4 +1,4 @@
-﻿using BuildCore.HumanResources.Application.Common.Interfaces;
+using BuildCore.HumanResources.Application.Common.Interfaces;
 using BuildCore.SharedKernel.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -25,26 +25,48 @@ namespace BuildCore.HumanResources.Infrastructure.Persistence.Interceptors
             if (eventData.Context is null)
                 return base.SavingChanges(eventData, result);
 
-            var entries = eventData.Context.ChangeTracker.Entries<BaseEntity>();
+            UpdateAuditFields(eventData.Context);
+
+            return base.SavingChanges(eventData, result);
+        }
+
+        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
+            DbContextEventData eventData,
+            InterceptionResult<int> result,
+            CancellationToken cancellationToken = default)
+        {
+            if (eventData.Context is null)
+                return base.SavingChangesAsync(eventData, result, cancellationToken);
+
+            UpdateAuditFields(eventData.Context);
+
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
+
+        private void UpdateAuditFields(DbContext context)
+        {
+            var entries = context.ChangeTracker.Entries<BaseEntity>();
 
             foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Added)
                 {
+                    // Seed işlemleri veya sistem işlemleri için varsayılan kullanıcı
+                    var userId = _currentUser.UserId ?? "System";
                     entry.Entity.SetCreated(
-                        _currentUser.UserId,
+                        userId,
                         _dateTime.UtcNow);
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
+                    // Seed işlemleri veya sistem işlemleri için varsayılan kullanıcı
+                    var userId = _currentUser.UserId ?? "System";
                     entry.Entity.SetUpdated(
-                        _currentUser.UserId,
+                        userId,
                         _dateTime.UtcNow);
                 }
             }
-
-            return base.SavingChanges(eventData, result);
         }
     }
 }

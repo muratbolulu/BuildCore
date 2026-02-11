@@ -4,6 +4,7 @@
   </Folder>
   <Folder Name="/src/">
     <Project Path="BuildCore.Api/BuildCore.Api.csproj" />
+    <Project Path="BuildCore.WebApp/BuildCore.WebApp.csproj" />
   </Folder>
   <Folder Name="/src/Modules/">
     <Project Path="BuildCore.SharedKernel/BuildCore.SharedKernel.csproj" />

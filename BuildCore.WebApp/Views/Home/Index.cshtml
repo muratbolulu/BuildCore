@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    var isLoggedIn = Context.Session.GetString("UserId") != null;
+    var userName = Context.Session.GetString("UserName");
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron bg-light p-5 rounded">
+                <h1 class="display-4">BuildCore Human Resources</h1>
+                <p class="lead">İnsan Kaynakları Yönetim Sistemi</p>
+                <hr class="my-4">
+                
+                @if (isLoggedIn)
+                {
+                    <p>Hoş geldiniz, <strong>@userName</strong>!</p>
+                    <div class="mt-4">
+                        <a class="btn btn-primary btn-lg" asp-controller="Users" asp-action="Index" role="button">Kullanıcıları Görüntüle</a>
+                    </div>
+                }
+                else
+                {
+                    <p>Devam etmek için lütfen giriş yapın veya yeni hesap oluşturun.</p>
+                    <div class="mt-4">
+                        <a class="btn btn-primary btn-lg me-2" asp-controller="Auth" asp-action="Login" role="button">Giriş Yap</a>
+                        <a class="btn btn-success btn-lg" asp-controller="Auth" asp-action="Register" role="button">Kayıt Ol</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

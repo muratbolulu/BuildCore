@@ -14,6 +14,10 @@ public class User : BaseEntity
     public string? Department { get; private set; }
     public string? Position { get; private set; }
     public DateOnly? HireDate { get; private set; }
+    public string? PasswordHash { get; private set; }
+
+    // Navigation property
+    public ICollection<UserRole> UserRoles { get; private set; } = new List<UserRole>();
 
     // Private constructor for EF Core
     private User() { }
@@ -25,7 +29,8 @@ public class User : BaseEntity
         string? phoneNumber = null,
         string? department = null,
         string? position = null,
-        DateOnly? hireDate = null)
+        DateOnly? hireDate = null,
+        string? passwordHash = null)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -34,6 +39,7 @@ public class User : BaseEntity
         Department = department;
         Position = position;
         HireDate = hireDate;
+        PasswordHash = passwordHash;
     }
 
     public void Update(
@@ -53,6 +59,14 @@ public class User : BaseEntity
     }
 
     public string GetFullName() => $"{FirstName} {LastName}";
+
+    public void SetPasswordHash(string passwordHash)
+    {
+        if (string.IsNullOrWhiteSpace(passwordHash))
+            throw new ArgumentException("Password hash boş olamaz", nameof(passwordHash));
+
+        PasswordHash = passwordHash;
+    }
 
     private void SetIdentity(string firstName, string lastName, string email)
     {

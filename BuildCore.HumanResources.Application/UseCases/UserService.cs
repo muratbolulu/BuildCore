@@ -112,7 +112,16 @@ public class UserService : IUserService
             Position = user.Position,
             HireDate = user.HireDate,
             CreatedAt = user.CreatedAt,
-            UpdatedAt = user.UpdatedAt
+            UpdatedAt = user.UpdatedAt,
+            Roles = user.UserRoles?.Select(ur => new RoleDto
+            {
+                Id = ur.Role.Id,
+                Name = ur.Role.Name,
+                Description = ur.Role.Description,
+                CreatedAt = ur.Role.CreatedAt,
+                UpdatedAt = ur.Role.UpdatedAt,
+                UserCount = ur.Role.UserRoles?.Count ?? 0
+            }).ToList() ?? new List<RoleDto>()
         };
     }
 }

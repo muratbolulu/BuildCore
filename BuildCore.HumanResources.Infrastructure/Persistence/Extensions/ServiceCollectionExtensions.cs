@@ -1,4 +1,4 @@
-﻿using BuildCore.HumanResources.Application.Common.Interfaces;
+using BuildCore.HumanResources.Application.Common.Interfaces;
 using BuildCore.HumanResources.Domain.Interfaces;
 using BuildCore.HumanResources.Infrastructure.Common;
 using BuildCore.HumanResources.Infrastructure.Persistence.Interceptors;
@@ -63,6 +63,8 @@ namespace BuildCore.HumanResources.Infrastructure.Persistence.Extensions
             // ----------------------------------------------------
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             // ----------------------------------------------------
             // 5. Unit Of Work

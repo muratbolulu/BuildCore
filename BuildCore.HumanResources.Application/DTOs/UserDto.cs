@@ -16,5 +16,6 @@ public class UserDto
     public DateOnly? HireDate { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
+    public List<RoleDto> Roles { get; set; } = new();
 }
 

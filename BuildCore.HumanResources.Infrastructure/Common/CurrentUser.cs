@@ -1,4 +1,4 @@
-﻿using BuildCore.HumanResources.Application.Common.Interfaces;
+using BuildCore.HumanResources.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -20,6 +20,9 @@ namespace BuildCore.HumanResources.Infrastructure.Common
 
         public string? UserId =>
             _httpContextAccessor.HttpContext?
+                .User?
+                .FindFirst("UserId")?.Value
+            ?? _httpContextAccessor.HttpContext?
                 .User?
                 .FindFirst(ClaimTypes.NameIdentifier)?
                 .Value;

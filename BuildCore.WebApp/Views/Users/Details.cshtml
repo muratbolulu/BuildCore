@@ -1,0 +1,57 @@
+@model BuildCore.HumanResources.Application.DTOs.UserDto
+
+@{
+    ViewData["Title"] = "Kullanıcı Detayları";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Kullanıcı Detayları</h2>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+            <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">@Model.FullName</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID:</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Ad:</dt>
+                <dd class="col-sm-9">@Model.FirstName</dd>
+
+                <dt class="col-sm-3">Soyad:</dt>
+                <dd class="col-sm-9">@Model.LastName</dd>
+
+                <dt class="col-sm-3">E-posta:</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3">Telefon:</dt>
+                <dd class="col-sm-9">@(Model.PhoneNumber ?? "-")</dd>
+
+                <dt class="col-sm-3">Departman:</dt>
+                <dd class="col-sm-9">@(Model.Department ?? "-")</dd>
+
+                <dt class="col-sm-3">Pozisyon:</dt>
+                <dd class="col-sm-9">@(Model.Position ?? "-")</dd>
+
+                <dt class="col-sm-3">İşe Başlama Tarihi:</dt>
+                <dd class="col-sm-9">@(Model.HireDate?.ToString("dd.MM.yyyy") ?? "-")</dd>
+
+                <dt class="col-sm-3">Oluşturulma Tarihi:</dt>
+                <dd class="col-sm-9">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+
+                @if (Model.UpdatedAt.HasValue)
+                {
+                    <dt class="col-sm-3">Güncellenme Tarihi:</dt>
+                    <dd class="col-sm-9">@Model.UpdatedAt.Value.ToString("dd.MM.yyyy HH:mm")</dd>
+                }
+            </dl>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,7 @@
+using BuildCore.Api.Authorization;
 using BuildCore.HumanResources.Application.DTOs;
 using BuildCore.HumanResources.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuildCore.Api.Controllers;
@@ -10,6 +12,7 @@ namespace BuildCore.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[Authorize(Policy = "Role:Admin,HR Manager,HR User")] // Admin, HR Manager veya HR User rolüne sahip kullanıcılar erişebilir
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -54,6 +57,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "Role:Admin,HR Manager")] // Sadece Admin veya HR Manager rolüne sahip kullanıcılar kullanıcı oluşturabilir
     public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserDto createUserDto, CancellationToken cancellationToken)
     {
         try
@@ -74,6 +78,7 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "Role:Admin,HR Manager")] // Sadece Admin veya HR Manager rolüne sahip kullanıcılar kullanıcı güncelleyebilir
     public async Task<ActionResult<UserDto>> UpdateUser(Guid id, [FromBody] UpdateUserDto updateUserDto, CancellationToken cancellationToken)
     {
         try
@@ -97,6 +102,7 @@ public class UsersController : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Policy = "Role:Admin")] // Sadece Admin rolüne sahip kullanıcılar kullanıcı silebilir
     public async Task<IActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
     {
         try

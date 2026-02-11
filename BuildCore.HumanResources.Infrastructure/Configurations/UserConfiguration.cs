@@ -36,6 +36,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Position)
             .HasMaxLength(100);
 
+        builder.Property(u => u.PasswordHash)
+            .HasMaxLength(255);
+
         builder.HasIndex(u => u.Email)
             .IsUnique();
 
